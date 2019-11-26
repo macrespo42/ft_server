@@ -12,12 +12,13 @@ RUN cp /home/nginx.conf /etc/nginx/sites-available/localhost
 RUN ln -s /etc/nginx/sites-available/localhost /etc/nginx/sites-enabled/
 RUN rm /etc/nginx/sites-enabled/default
 
+# install php 7.3
+RUN apt-get -y install php7.3 php-mysql php-fpm php-cli php-mbstring
+
 #mysql config
 RUN apt-get install -y mariadb-server
 RUN bash ./home/mysql_config.sh
 
 EXPOSE 80
 
-CMD bash ./home/start.sh && tail -f /dev/null
-# debug cmd
-# CMD bash
+CMD bash ./home/start.sh
