@@ -6,6 +6,8 @@ COPY srcs/start.sh ./home/
 COPY srcs/mysql_config.sh ./home/
 COPY srcs/self-signed.conf ./home/
 COPY srcs/latest.tar.gz ./home/
+COPY srcs/phpMyAdmin.tar.gz ./home/
+COPY srcs/config-inc.php ./home
 
 #install services
 RUN apt-get -y update && apt-get -y upgrade
@@ -32,6 +34,11 @@ RUN bash ./home/mysql_config.sh
 #wordpress
 RUN tar -xvzf ./home/latest.tar.gz -C /var/www/localhost/
 RUN chown www-data: /var/www/localhost -R
+
+#setup phpMyAdmin
+RUN tar -xvf ./home/phpMyAdmin.tar.gz -C /var/www/localhost/
+RUN mv /var/www/localhost/phpMyAdmin-4.9.1-english /var/www/localhost/phpMyAdmin
+RUN cp ./home/config-inc.php /var/www/localhost/phpMyAdmin/
 
 EXPOSE 80 443
 
