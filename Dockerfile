@@ -6,7 +6,6 @@ COPY srcs/start.sh ./home/
 COPY srcs/mysql_config.sh ./home/
 COPY srcs/self-signed.conf ./home/
 COPY srcs/latest.tar.gz ./home/
-COPY srcs//wp-config.php ./home/
 
 #install services
 RUN apt-get -y update && apt-get -y upgrade
@@ -31,10 +30,8 @@ RUN cp ./home/self-signed.conf /etc/nginx/snippets/self-signed.conf
 RUN bash ./home/mysql_config.sh
 
 #wordpress
-# RUN cp ./home/latest.tar.gz /tmp/ && tar xzvf /tmp/latest.tar.gz
-# RUN cp ./home/wp-config.php /tmp/wordpress/wp-config.php
-# RUN chown -R www-data:www-data /var/www/localhost
-# RUN cp -a /tmp/wordpress/. /var/www/localhost
+RUN tar -xvzf ./home/latest.tar.gz -C /var/www/localhost/
+RUN chown www-data: /var/www/localhost -R
 
 EXPOSE 80 443
 
